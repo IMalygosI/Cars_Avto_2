@@ -14,7 +14,7 @@ namespace Car
         protected int place_Passenger_in_Bus;//Место для пассажиров в автобусе
         protected int Passenger;//Пассажир
         protected double remainder;//остаток от раст. для остановок в сторону 1
-        
+
         public Bus()
         {
             Info(cars);
@@ -146,17 +146,17 @@ namespace Car
             Console.WriteLine("Конец-Yb: ");
             this.koordinata_Yb = Convert.ToInt32(Console.ReadLine());
 
-            distance = (Math.Round(Math.Sqrt(((koordinata_Xb - koordinata_Xa) * (koordinata_Xb - koordinata_Xa)) + ((koordinata_Yb - koordinata_Ya) * (koordinata_Yb - koordinata_Ya)))));            
-            distance = Convert.ToInt32(2*distance);// в одну сторону
+            distance = (Math.Round(Math.Sqrt(((koordinata_Xb - koordinata_Xa) * (koordinata_Xb - koordinata_Xa)) + ((koordinata_Yb - koordinata_Ya) * (koordinata_Yb - koordinata_Ya)))));
+            distance = Convert.ToInt32(2 * distance);// в одну сторону
             Console.WriteLine("Введите Количество остановок: ");
             this.Number_Bus_Stops = Convert.ToInt32(Console.ReadLine());
 
-            this.Stops_Bus_dis = Math.Round((distance/2) / Number_Bus_Stops);//Находим раст до след ост
-            this.remainder = distance/2;
+            this.Stops_Bus_dis = Math.Round((distance / 2) / Number_Bus_Stops);//Находим раст до след ост
+            this.remainder = distance / 2;
 
             this.kilometers_Enough_Fuel = Math.Round((currentamount_Gasoline / consumption_Fuel) * 100); //На сколько километров хватит бензина
             Console.WriteLine("> Данные внесены");
-            Console.WriteLine($"Маршрут поездки: {distance/2} Км\nОстановок на маршруте: {Number_Bus_Stops}"); //УЧИТЫВАЕМ ЧТО ЭТО ТОЛЬКО В ОДНУ СТОРОНУ, после того как приедет поедет обратно!
+            Console.WriteLine($"Маршрут поездки: {distance / 2} Км\nОстановок на маршруте: {Number_Bus_Stops}"); //УЧИТЫВАЕМ ЧТО ЭТО ТОЛЬКО В ОДНУ СТОРОНУ, после того как приедет поедет обратно!
             Console.WriteLine($"\nОбъем бака: {volume_Tank} Литров\nУровень топлива: {currentamount_Gasoline} Литров");
             Menu(cars);
         }
@@ -392,12 +392,11 @@ namespace Car
                 {
                     remainder = 0;
                     mileage = distance;
-                    //interval = 0;
                     interval += Stops_Bus_dis;
                     Console.WriteLine("База");
                     Console.WriteLine("");
-                    Console.WriteLine($"Остаток топлива: {Math.Round(currentamount_Gasoline, 1)} литров.");
-                    Console.WriteLine($"Пробег: {Math.Round(mileage)} километров.");
+                    Console.WriteLine($"Остаток топлива: {currentamount_Gasoline} литров.");
+                    Console.WriteLine($"Пробег: {mileage} километров.");
                     distance = 0;
                 }
                 if (currentamount_Gasoline < 2 && interval < distance && interval != 0)
@@ -450,8 +449,8 @@ namespace Car
                         mileage = distance;
                         interval = 0;
                         Console.WriteLine("База");
-                        Console.WriteLine($"Остаток топлива: {Math.Round(currentamount_Gasoline, 1)} литров.");
-                        Console.WriteLine($"Пробег: {Math.Round(mileage)} километров.");
+                        Console.WriteLine($"Остаток топлива: {currentamount_Gasoline} литров.");
+                        Console.WriteLine($"Пробег: {mileage} километров.");
                         distance = 0;
                     }
                 }
