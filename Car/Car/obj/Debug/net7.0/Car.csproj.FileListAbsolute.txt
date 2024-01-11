@@ -1,0 +1,14 @@
+B:\VisualStudioSV\Car\Car\obj\Debug\net7.0\Car.GeneratedMSBuildEditorConfig.editorconfig
+B:\VisualStudioSV\Car\Car\obj\Debug\net7.0\Car.AssemblyInfoInputs.cache
+B:\VisualStudioSV\Car\Car\obj\Debug\net7.0\Car.AssemblyInfo.cs
+B:\VisualStudioSV\Car\Car\obj\Debug\net7.0\Car.csproj.CoreCompileInputs.cache
+B:\VisualStudioSV\Car\Car\bin\Debug\net7.0\Car.exe
+B:\VisualStudioSV\Car\Car\bin\Debug\net7.0\Car.deps.json
+B:\VisualStudioSV\Car\Car\bin\Debug\net7.0\Car.runtimeconfig.json
+B:\VisualStudioSV\Car\Car\bin\Debug\net7.0\Car.dll
+B:\VisualStudioSV\Car\Car\bin\Debug\net7.0\Car.pdb
+B:\VisualStudioSV\Car\Car\obj\Debug\net7.0\Car.dll
+B:\VisualStudioSV\Car\Car\obj\Debug\net7.0\refint\Car.dll
+B:\VisualStudioSV\Car\Car\obj\Debug\net7.0\Car.pdb
+B:\VisualStudioSV\Car\Car\obj\Debug\net7.0\Car.genruntimeconfig.cache
+B:\VisualStudioSV\Car\Car\obj\Debug\net7.0\ref\Car.dll
