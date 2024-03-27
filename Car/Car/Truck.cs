@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -18,6 +18,10 @@ namespace Car
         protected double koordinata_Y_Unloading;
         protected double Mesto_Razgruz;//расстояние от места погрузки до места рагрузки
         protected double Mesto_Baza; //расстояние от места разгрузки до базы
+        protected double koordinata_X_loading;
+        protected double pogruzk;
+        protected double razgrus;
+        protected double kilom;
         int e=0;
 
         public Truck()
@@ -145,15 +149,24 @@ namespace Car
             this.koordinata_Xb = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Конец-Yb: ");
             this.koordinata_Yb = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Место разгрузки-Xb: ");
-            this.koordinata_X_Unloading = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Место разгрузки-Yb: ");
-            this.koordinata_Y_Unloading = Convert.ToInt32(Console.ReadLine());
-            distance = Math.Sqrt(Math.Pow(koordinata_Xb - koordinata_Xa, 2) + Math.Pow(koordinata_Yb - koordinata_Ya, 2)); //Расстояния до места погрузки груза
+            Console.WriteLine("Место погрузки: ");
+            this.koordinata_X_loading = Convert.ToInt32(Console.ReadLine());
+
+
+            distance = 2 * (Math.Round(Math.Sqrt(((koordinata_Xb - koordinata_Xa) * (koordinata_Xb - koordinata_Xa)) + ((koordinata_Yb - koordinata_Ya) * (koordinata_Yb - koordinata_Ya))))); //Расстояния до места погрузки груза
             distance = Convert.ToInt32(distance);
+            distance = Convert.ToInt32(distance);
+            this.pogruzk = 0 + koordinata_X_loading;
+            this.razgrus = (distance / 2) - pogruzk;
+
+            this.kilom = 0;
             this.interval = 0;
+
+            kilom = koordinata_X_loading;
             Console.WriteLine($"\nОбъем бака: {volume_Tank} Литров\nУровень топлива: {currentamount_Gasoline} Литров");
-            Console.WriteLine($"Точка погрузки через: {distance} Км");
+            Console.WriteLine($"Весь путь с дорогой обратно после разгрузки: {distance} Км");
+            Console.WriteLine($"Точка погрузки через: {pogruzk} Км");
+            Console.WriteLine($"Точка разгрузки через: {distance/2} Км");
             Menu(cars);
         }
         protected void Unloading_Point(List<Auto> cars) // вводим информацию по пути 
@@ -163,17 +176,17 @@ namespace Car
             e += 1;            
             Console.WriteLine("\nМашина ЗАГРУЖЕНА!");
             Console.WriteLine($"\nОбъем бака: {volume_Tank} Литров\nУровень топлива: {currentamount_Gasoline} Литров");
-            Console.WriteLine($"Точка разгрузки через: {distance} Км\n");
+            Console.WriteLine($"Точка разгрузки через: {distance-pogruzk} Км\n");
             Menu(cars);
         }
         protected void BAZA_Point(List<Auto> cars) // вводим информацию по пути 
         {
             Mesto_Baza = Math.Sqrt(Math.Pow(koordinata_Xa - koordinata_X_Unloading, 2) + Math.Pow(koordinata_Ya - koordinata_Y_Unloading, 2)); //расстояние от места разгрузки до базы
-            distance = Convert.ToInt32(Mesto_Baza);
+            //distance = Convert.ToInt32(Mesto_Baza);
             e += 1;
             Console.WriteLine("\nМашина разгружена!");
             Console.WriteLine($"\nОбъем бака: {volume_Tank} Литров\nУровень топлива: {currentamount_Gasoline} Литров");
-            Console.WriteLine($"До Базы ехать: {distance} Км\n");
+            
             Menu(cars);
         }
         protected override void Stop(List<Auto> cars)//Остановка
@@ -272,13 +285,15 @@ namespace Car
                             break;
                     }
                 }
-                if (interval >= distance && distance != 0 && e == 0) //Для цели поездки
+                if (interval >= pogruzk && kilom == pogruzk && e == 0) //Для цели поездки
                 {
-                    double vivo = distance - (interval - 100);
-                    mileage += vivo - 100;
+                    //
+                    double vivo = kilom - interval;
+                    mileage = pogruzk;
                     speed = 0;
-                    distance = 0;
-                    interval = 0;
+                    distance -= kilom;
+                    kilom = razgrus;
+                    interval = pogruzk;
                     Console.WriteLine("\nМашина прибыла в точку погрузки");
                     if (carrying_Vess == 0)
                     {
@@ -289,7 +304,7 @@ namespace Car
                 else if (interval >= distance && distance != 0 && e == 1) //Для цели поездки
                 {
                     double vivo = distance - (interval - 100);
-                    mileage += vivo - 100;
+                    mileage = razgrus;
                     speed = 0;
                     distance = 0;
                     interval = 0;
@@ -300,13 +315,14 @@ namespace Car
                         BAZA_Point(cars);
                     }
                 }
-                else if(interval >= distance && distance != 0 && e == 2) //Для цели поездки
+                else if(interval >= distance /2 && mileage >= distance && kilom == distance/2 && e == 2) //Для цели поездки
                 {
-                    double vivo = distance - (interval - 100);
-                    mileage += vivo - 100;
+                    mileage = distance;
+                    
                     speed = 0;
                     distance = 0;
                     interval = 0;
+                    
                     Console.WriteLine("\nВы доехали до базы");
                     Console.WriteLine("\nМашина на базе, Окончить путь ?\n1 - Да\n2 - Нет"); 
                     string? oko = Console.ReadLine();
@@ -331,7 +347,7 @@ namespace Car
                 Console.WriteLine($"\n> Вы проехали: {interval} км");// Интервал это то сколько -за раз едем, если остановаится он сбрасывается до 0 ну пробег все еще остается!
                 Console.WriteLine($"> Cколько проедем при текущем уровне бензина в баке: {kilometers_Enough_Fuel} км");
                 Console.WriteLine($"> Сейчас в баке: {currentamount_Gasoline} литров");
-                Console.WriteLine($"> Необходимо проехать: {distance} км");
+                Console.WriteLine($"> Необходимо проехать: {kilom} км");
                 Console.WriteLine($"> Пробег автомобиля: {mileage} км");
                 Console.WriteLine($"> Вы ехали со скоростью: {speed} км\n");
                 if (currentamount_Gasoline == 0)
